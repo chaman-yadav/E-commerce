@@ -65,15 +65,18 @@ def create_app():
     from .auth import auth
     from .password import password
     from .admin import admin
-
+    from .category import category
+    
     app.register_blueprint(main)
     app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(admin)
     app.register_blueprint(password,url_prefix="/password")
+    app.register_blueprint(category)
 
     # Database creation and admin user setup
     with app.app_context():
-        db.create_all()  # Creates database tables
+        db.create_all()
+        # Creates database tables
         from .admin import create_admin_user  # Assuming this function exists in admin.py
         create_admin_user()
     #print(app.url_map)

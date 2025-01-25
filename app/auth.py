@@ -41,9 +41,9 @@ def register():
                 password=hashed_password,
                 role='customer',
                 contact=form.contact.data,
-                location=form.location.data,
-                dob=form.dob.data,
-                gender=form.gender.data
+                address=form.address.data,
+                city=form.city.data,
+                dob=form.dob.data
             )
 
             # Add the new user to the database
@@ -154,9 +154,8 @@ def update_details(id):
         username = request.form.get('username')
         email = request.form.get('email')
         contact = request.form.get('contact')
-        location = request.form.get('location')
+        city = request.form.get('city')
         dob = request.form.get('dob')
-        gender = request.form.get('gender')
         role = request.form.get('role') if current_user.role == 'admin' else user.role  # Only admins can update roles
 
         # Validate required fields
@@ -172,22 +171,17 @@ def update_details(id):
                 flash("Invalid date format. Please use YYYY-MM-DD.", "error")
                 return redirect(url_for('auth.update_details', id=id))
         
-        # Validate gender
-        valid_genders = ['Male', 'Female', 'Other', 'Prefer not to say']
-        if gender and gender not in valid_genders:
-            flash("Invalid gender selection.", "error")
-            return redirect(url_for('auth.update_details', id=id))
-
+        
         # Try to update the user details
         try:
             # Update user details
             user.username = username
             user.email = email
             user.contact = contact
-            user.location = location
+            user.city = city
             user.dob = dob
-            user.gender = gender
             user.role = role
+
 
             # Commit changes to the database
             db.session.commit()

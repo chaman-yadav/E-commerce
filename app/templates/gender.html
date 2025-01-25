@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product.css') }}">
+</head>
+<body>
+    {% extends "home.html" %}
+
+{% block title %}Products by Gender{% endblock %}
+
+{% block content %}
+<div class="full">
+<h1>Products for {{ products_by_gender[0][5] if products_by_gender else 'Selected Gender' }}</h1>
+
+<div class="products-container">
+    {% for product in products_by_gender %}
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='uploads/' ~ product['image_url']) }}" alt="{{ product['name'] }}" class="product-image">
+        <h3>{{ product[1] }}</h3>
+        <p>Manufacturer: {{ product[2] }}</p>
+        <p>Price: ₹{{ product[3] }}</p>
+        <p>Rating: {{ product[6] }}</p>
+        
+        <div class="product-actions">
+            <form method="POST" action="/add_to_cart" style="display: inline;">
+                <input type="hidden" name="product_id" value="{{ product[0] }}">
+                <button type="submit" class="btn {% if product[0] in cat %}btn-danger{% else %}btn-success{% endif %}">
+                    {% if product[0] in cat %}
+                    Remove from Cart
+                    {% else %}
+                    Add to Cart
+                    {% endif %}
+                </button>
+            </form>
+            <form method="POST" action="/add_to_wishlist" style="display: inline;">
+                <input type="hidden" name="product_id" value="{{ product[0] }}">
+                <button type="submit" class="btn {% if product[0] in wis %}btn-secondary{% else %}btn-warning{% endif %}">
+                    {% if product[0] in wis %}
+                    Remove from Wishlist
+                    {% else %}
+                    Add to Wishlist
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
+
+</body>
+
+</html>

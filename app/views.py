@@ -14,9 +14,9 @@ def home():
     random_products = products[:126]  # Display a subset of products
 
     wishlist = [item.product_id for item in Wishlist.query.filter_by(user_id=current_user.id).all()] if current_user.is_authenticated else []
-    cat = [item.product_id for item in Cart.query.filter_by(user_id=current_user.id).all()] if current_user.is_authenticated else []
+    cart = [item.product_id for item in Cart.query.filter_by(user_id=current_user.id).all()] if current_user.is_authenticated else []
 
-    return render_template('homepage.html', products=random_products, wishlist=wishlist, cat=cat)
+    return render_template('homepage.html', products=random_products, wishlist=wishlist, cart=cart)
 
 
 @main.route('/product/<int:product_id>')
@@ -165,14 +165,17 @@ def add_to_cart():
 
     if not product:
         flash("Product not found!", "danger")
-        return redirect(url_for('main.home'))
+        return redirect(request.referrer or url_for('main.home'))
 
     # Check if the product is already in the user's cart
     existing_cart_item = Cart.query.filter_by(user_id=current_user.id, product_id=product.id).first()
     if existing_cart_item:
-        existing_cart_item.quantity += 1
-        existing_cart_item.total_price = existing_cart_item.quantity * product.price
+        # Remove the product from the cart
+        db.session.delete(existing_cart_item)
+        db.session.commit()
+        flash("Product removed from cart!", "success")
     else:
+        # Add the product to the cart
         cart_item = Cart(
             user_id=current_user.id,
             product_id=product.id,
@@ -180,12 +183,10 @@ def add_to_cart():
             total_price=product.price
         )
         db.session.add(cart_item)
+        db.session.commit()
+        flash("Product added to cart!", "success")
 
-    db.session.commit()
-    flash("Product added to cart!", "success")
     return redirect(request.referrer or url_for('main.home'))
-    # return redirect(url_for('main.home'))
-
 
 @main.route('/cart')
 @login_required

@@ -34,17 +34,15 @@ class RegistrationForm(FlaskForm):
         Regexp(r'^\d{10}$', message="Contact number must be 10 digits.")
     ])
     
-    location = StringField('Location', validators=[DataRequired()])
+    address = StringField('Address (Door No, Street, Area)', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    
     
     dob = DateField('Date of Birth', validators=[
         DataRequired(message="Please enter a valid date in the format YYYY-MM-DD.")
     ])
     
-    gender = SelectField('Gender', choices=[
-        ('male', 'Male'),
-        ('female', 'Female'),
-        ('other', 'Other')
-    ], validators=[DataRequired()])
+    
     
     submit = SubmitField('Register')
 
@@ -59,21 +57,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Enter a valid email address.")
 
 
-
-
-# class ProductForm(FlaskForm):
-#     name = StringField('Product Name', validators=[DataRequired()])
-#     price = DecimalField('Price', validators=[DataRequired(), NumberRange(min=0)], places=2)
-#     description = TextAreaField('Description', validators=[Optional()])
-#     category = StringField('Category', validators=[Optional()])
-#     size = StringField('Size', validators=[Optional()])
-#     colour = StringField('Colour', validators=[Optional()])
-#     quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=0)])
-#     manufacturer = StringField('Manufacturer', validators=[Optional()])
-#     country_of_origin = StringField('Country of Origin', validators=[Optional()])
-    
-#     rating = DecimalField('Rating', validators=[Optional(), NumberRange(min=0, max=5)], places=1)
-#     discount = DecimalField('Discount', default=0.0, validators=[Optional(), NumberRange(min=0)], places=2)
 
 class ProductForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])

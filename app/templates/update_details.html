@@ -141,8 +141,8 @@ button[type="submit"]:hover {
 
             <!-- Location Field -->
             <div class="form-group">
-              <label for="location">Location:</label>
-              <select name="location" id="location" class="form-control">
+                <label for="city">Location:</label>
+                <select name="city" id="city"  class="form-control">
                   <option value="" disabled selected>Select your city</option>
                   <option value="Mumbai" {% if user.location == 'Mumbai' %}selected{% endif %}>Mumbai</option>
                   <option value="Delhi" {% if user.location == 'Delhi' %}selected{% endif %}>Delhi</option>
@@ -201,16 +201,7 @@ button[type="submit"]:hover {
        
             </div>
 
-            <!-- Gender Field -->
-            <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select name="gender" id="gender" class="form-control">
-                    <option value="" disabled {% if not user.gender %}selected{% endif %}>Select your gender</option>
-                    <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
-                    <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
-                    <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
-                </select>
-            </div>
+            
 
             <!-- Submit Button -->
             <div class="form-group button-group">

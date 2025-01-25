@@ -1,0 +1,65 @@
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product-card {
+    width: 300px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.product-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+.product-actions {
+    margin-top: 10px;
+}
+
+.product-actions .btn {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.product-actions .btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.product-actions .btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.product-actions .btn-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.product-actions .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}

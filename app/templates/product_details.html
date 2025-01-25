@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='product_details.css') }}">
+    <style>
+        /* Green color for "Add to Cart" */
+.add-btn {
+    background-color: green;
+}
+
+/* Red color for "Remove from Cart" */
+.remove-btn {
+    background-color: red;
+}
+
+    </style>
 </head>
 <body>
   {% extends "home.html" %}
@@ -44,11 +56,17 @@
             <div class="actions">
                 <form action="/add_to_cart" method="POST" style="display: inline;">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit" class="add-to-cart">Add to Cart</button>
+                    <button type="submit" class="add-to-cart {% if product.id in cat %}remove-btn{% else %}add-btn{% endif %}">
+                        {% if product.id in cat %}
+                            Remove from Cart
+                        {% else %}
+                            Add to Cart
+                        {% endif %}
+                    </button>
                 </form>
                 <form action="{% if product.id in wishlist %}/remove_from_wishlist{% else %}/wishlist{% endif %}" method="POST" style="display: inline;">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit" class="wishlistt-btn">
+                    <button type="submit" class="wishlistt-btn ">
                         {% if product.id in wishlist %}
                             Remove from Wishlist❤️
                         {% else %}
@@ -69,7 +87,7 @@
               <div class="product">  <!-- Same class as in homepage.html -->
                   <form action="{% if related_product.id in wishlist %}/remove_from_wishlist{% else %}/wishlist{% endif %}" method="POST" style="display: inline;">
                       <input type="hidden" name="product_id" value="{{ related_product.id }}">
-                      <button type="submit" class="heart-icon" name="wishlist-btn">
+                      <button type="submit" class="heart-icon " name="wishlist-btn">
                           {% if related_product.id in wishlist %}
                               ❤️
                           {% else %}
@@ -90,9 +108,16 @@
 
                       <a href="{{ url_for('main.product_details', product_id=related_product.id) }}"><button class="view-btn">View</button> </a>
                       <form action="/add_to_cart" method="POST" style="display: inline;">
-                      <input type="hidden" name="product_id" value="{{ related_product.id }}">
-                      <button type="submit" class="add-to-cart">Add to Cart</button>
-                      </form>
+                        <input type="hidden" name="product_id" value="{{ related_product.id }}">
+                        <button type="submit" class="add-to-cart {% if related_product.id in cat %}remove-btn-related{% else %}add-btn{% endif %}">
+                            {% if related_product.id in cat %}
+                                Remove from Cart
+                            {% else %}
+                                Add to Cart
+                            {% endif %}
+                        </button>
+                    </form>
+                    
               </div>
             </div>
           {% endfor %}

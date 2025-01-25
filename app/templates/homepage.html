@@ -1,6 +1,17 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Green color for "Add to Cart" */
+.add-btn {
+    background-color: green;
+}
+
+/* Red color for "Remove from Cart" */
+.remove-btn {
+    background-color: red;
+}
+    </style>
 </head>
 <body>
     <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
@@ -44,7 +55,13 @@
             <div class="bb">
                 <form action="/add_to_cart" method="POST" style="display: inline;">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
-                    <button type="submit" class="add-to-cart">Add to Cart</button>
+                    <button type="submit" class="add-to-cart {% if product.id in cart %}remove-btn{% else %}add-btn{% endif %}">
+                        {% if product.id in cart %}
+                            Remove from Cart
+                        {% else %}
+                            Add to Cart
+                        {% endif %}
+                    </button>
                 </form>
   
                 <a href="{{ url_for('main.product_details', product_id=product.id) }}">

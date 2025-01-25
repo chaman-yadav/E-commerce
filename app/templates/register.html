@@ -85,10 +85,18 @@
                 {% endif %}
             </div>
 
+            <!-- Address Field -->
+            <div class="form-group">
+                <label for="address">Address (Door No, Street, Area):</label>
+                {{ form.address(class="form-control") }}
+                {% if form.address.errors %}
+                <small class="error">{{ form.address.errors[0] }}</small>
+                {% endif %}
+            </div>
             <!-- Location Field -->
             <div class="form-group">
-                <label for="location">Location:</label>
-                <select name="location" id="location" class="form-control">
+                <label for="city">City:</label>
+                <select name="city" id="city" class="form-control">
                     <option value="" disabled selected>Select your city</option>
                     <option value="Mumbai">Mumbai</option>
                     <option value="Delhi">Delhi</option>
@@ -139,8 +147,8 @@
                     <option value="Solapur">Solapur</option>
                     <option value="Hubli-Dharwad">Hubli-Dharwad</option>
                 </select>
-                {% if form.location.errors %}
-                <small class="error">{{ form.location.errors[0] }}</small>
+                {% if form.city.errors %}
+                <small class="error">{{ form.city.errors[0] }}</small>
                 {% endif %}
             </div>
 
@@ -153,14 +161,7 @@
                 {% endif %}
             </div>
 
-            <!-- Gender Field -->
-            <div class="form-group">
-                <label for="gender">Gender:</label>
-                {{ form.gender(class="form-control") }}
-                {% if form.gender.errors %}
-                <small class="error">{{ form.gender.errors[0] }}</small>
-                {% endif %}
-            </div>
+            
 
             <!-- Buttons -->
             <div class="buttons">

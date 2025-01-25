@@ -25,9 +25,9 @@ def create_admin_user():
             password=hashed_password,
             role='admin',
             contact='1234567890',
-            location='Admin Location',
-            dob=datetime(1990, 1, 1).date(),
-            gender='male'
+            address="Admin Address", 
+            city='Admin city',
+            dob=datetime(1990, 1, 1).date()
         )
         db.session.add(new_admin)
         db.session.commit()
@@ -415,18 +415,15 @@ def user_details():
 
     # Filters
     role_filter = request.args.get('role')
-    location_filter = request.args.get('location')
-    gender_filter = request.args.get('gender')
+    city_filter = request.args.get('city')
 
     # Query to fetch user details with filters
     query = User.query
     if role_filter:
         query = query.filter_by(role=role_filter)
-    if location_filter:
-        query = query.filter(User.location.ilike(f"%{location_filter}%"))
-    if gender_filter:
-        query = query.filter_by(gender=gender_filter)
-
+    if city_filter:
+        query = query.filter(User.city.ilike(f"%{city_filter}%"))
+    
     users = query.all()
 
-    return render_template('user_details.html', users=users, role_filter=role_filter, location_filter=location_filter, gender_filter=gender_filter)
+    return render_template('user_details.html', users=users, role_filter=role_filter, city_filter=city_filter)

@@ -10,9 +10,9 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), nullable=False)
     contact = db.Column(db.String(20), nullable=False)
-    location = db.Column(db.String(100), nullable=False)
+    address= db.Column(db.String(200), nullable=False)
+    city = db.Column(db.String(100), nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    gender = db.Column(db.String(10), nullable=False)
     reset_token = db.Column(db.String(128), nullable=True)
  
     
