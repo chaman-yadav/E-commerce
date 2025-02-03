@@ -54,7 +54,12 @@
 
             <div class="form-group">
                 <label for="password">Password:</label>
-                {{ form.password(class="form-control", id="password", required=True) }} <!-- Use Flask-WTF rendering -->
+                <div style="position: relative; display: flex; align-items: center;">
+                    {{ form.password(class="form-control", id="password", required=True, style="width: 100%; padding-right: 40px;") }} 
+                    <button type="button" id="togglePassword" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer;">
+                        👁️
+                    </button>
+                </div>
             </div>
 
             <div class="buttons">
@@ -68,6 +73,23 @@
             <p>If you are not registered, <a href="{{ url_for('auth.register') }}">Register</a></p>
         </form>
     </div>
+
+
+
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        let passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            this.innerText = "🔒"; // Change icon to lock when visible
+        } else {
+            passwordInput.type = "password";
+            this.innerText = "👁️"; // Change icon to eye when hidden
+        }
+    });
+</script>
+
     {% endblock %}
 </body>
+
 </html>
