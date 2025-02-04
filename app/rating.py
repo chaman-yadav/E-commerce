@@ -65,7 +65,7 @@ def submit_rating_action():
     db.session.commit()
 
     # Calculate the average rating for the product
-    product.avg_rating = db.session.query(func.avg(Rating.rating)).filter(Rating.Product_ID == product_id).scalar()
+    product.avg_rating = round(db.session.query(func.avg(Rating.rating)).filter(Rating.Product_ID == product_id).scalar(), 2)
     db.session.commit()
 
     return jsonify({"message": "Rating submitted successfully"}), 200

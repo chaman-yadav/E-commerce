@@ -23,11 +23,11 @@
                 <td>{{ order.order_date.strftime('%Y-%m-%d') }}
                 <td>₹{{ order.grand_total }}</td>
                 <td>
-                    {% if is_unassigned_orders %}
+                    {% if order.assigned_delivery_person_id == None %}
                     <button class="status-filter-button" onclick="assign_order('{{ order.id }}')">
                         Take This Order
                     </button>
-                    {% else %}
+                    {% elif order.delivered_date == None %}
                     <select class="status-select" onchange="updateStatus('{{order.id}}' , this.value)">
                         {% for status_option in order.status_options.enums %}
 
@@ -37,6 +37,10 @@
 
                         {% endfor %}
                     </select>
+                    {% else %}
+                    <div style="padding: 15px 25px;">
+                    {{ order.status }}
+                    </div>
                     {% endif %}
                 </td>
             </tr>

@@ -113,6 +113,12 @@ def update_status():
     if new_status not in order.status_options.enums:
         return jsonify({"error": "Invalid Status For Order"}), 400
 
+    if order.assigned_delivery_person != current_user:
+        return jsonify({"error", "You Cannot Change the status of this order"}), 400
+
+    if order.delivered_date:
+        return jsonify({"error": "Cannot change status of Delivered Order."}), 400
+
     # Update order status
     order.status = new_status
     db.session.commit()
@@ -125,9 +131,6 @@ def update_status():
             send_order_delivered_email(order)
         except Exception as e:
             return jsonify({"error": f"Failed to send email: {str(e)}"}), 500
-    else:
-        order.delivered_date = None
-        db.session.commit()
 
     return jsonify({"message": f"Status updated successfully to {new_status}"}), 200
 
